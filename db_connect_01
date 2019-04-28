@@ -1,0 +1,22 @@
+<?php
+// DBサーバーへ接続
+$db_link = mysqli_connect( 'localhost', 'root', 'root');
+// DBへ接続 (パラメータの順番が違う)
+mysqli_select_db( $db_link, 'world');
+
+// sql文の記載
+$sql = <<<EOF
+    select * from  country co1;
+EOF;
+
+// sqlを実行
+$result = $db_link->query($sql);
+
+// 実行データを採り出し
+while ($row = $result->fetch_assoc())
+{
+    print($row['Code']."|".$row['Name']."<br>");
+}
+
+// DBとの接続解除
+mysqli_close($db_link);
