@@ -1,0 +1,31 @@
+<?php
+// DBサーバーへ接続
+$db_link = mysqli_connect( 'localhost', 'root', 'root');
+// DBへ接続 (パラメータの順番が違う)
+mysqli_select_db( $db_link, 'world');
+
+//sql記載
+$sql = <<<EOF
+    select * from  country co1;
+EOF;
+
+//sqlの実行
+$result = $db_link->query($sql);
+
+// html上にテーブルタグで表示します
+print('<table border="1">');
+
+//１行ずつデータを吐き出し印字します。
+while ($row = $result->fetch_assoc())
+{
+    print('<tr>');
+    print('<td>'.$row['Code']."</td>");
+    print('<td>'.$row['Name']."</td>");
+    print('<td>'.$row['Continent']."</td>");
+    print('<td>'.$row['Population']."</td>");
+    print('</tr>');
+}
+print('</table>');
+
+// DBとの接続解除
+mysqli_close($db_link);
